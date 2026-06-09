@@ -366,8 +366,8 @@ wire [15:0] joystick_p1_USB, joystick_p2_USB, joystick_p3_USB, joystick_p4_USB;
 // joydb output bit order matches MiSTer-standard directly: [3:0]=R/L/D/U, [4..6]=btn1-3,
 // [10]=Start, [11]=Coin — the exact bits this core reads (pN_input[9:0], joystick_pN[10],
 // joystick_combined[11]). DB9 covers P1/P2 only; P3/P4 stay USB-only (4-player kick games).
-wire [15:0]   joystick_p1 = joydb_1ena ? (OSD_STATUS ? 16'b0 : {joydb_1[11],joydb_1[10],joydb_1[9:0]}) : joystick_p1_USB;
-wire [15:0]   joystick_p2 = joydb_2ena ? (OSD_STATUS ? 16'b0 : {joydb_2[11],joydb_2[10],joydb_2[9:0]}) : joydb_1ena ? joystick_p1_USB : joystick_p2_USB;
+wire [15:0]   joystick_p1 = joydb_1ena ? (OSD_STATUS ? 16'b0 : joydb_1_mapped[11:0]) : joystick_p1_USB;
+wire [15:0]   joystick_p2 = joydb_2ena ? (OSD_STATUS ? 16'b0 : joydb_2_mapped[11:0]) : joydb_1ena ? joystick_p1_USB : joystick_p2_USB;
 wire [15:0]   joystick_p3 = joydb_2ena ? joystick_p2_USB : joydb_1ena ? joystick_p2_USB : joystick_p3_USB;
 wire [15:0]   joystick_p4 = joydb_2ena ? joystick_p2_USB : joydb_1ena ? joystick_p3_USB : joystick_p4_USB;
 // [MiSTer-DB9 END]
